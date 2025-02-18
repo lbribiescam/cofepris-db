@@ -259,16 +259,16 @@ db.query(sql, [password, telefono, celular, nombre_responsable, email, tel_respo
 
 app.put('/datos/:id', (req, res) => {
   const {id} = req.params;
-  const { numtramite, numvucem, fecha, sanitario, denominaciondis, 
-    denominaciongen, clasificacion, estadotramite, prevencion, especificarprev, date_res,
-    numresprevencion, date3, consideraciones, observaciones, email, razon_social, nombre_responsable,
-    telefono_responsable} = req.body;
+
+ 
+  const { registro_sanitario, numero_ingreso, nombre_comercial, denominacion_generica, clasificacion,
+    observaciones} = req.body;
 
     const sql =`UPDATE usuarios_detalle_copy1 
     SET nombre_comercial = ?, denominacion_generica = ?, numero_ingreso = ?, registro_sanitario = ?, observaciones = ?, 
     fecha_actualizacion = ? WHERE id = ?`;
 
-    db.query(sql, [ denominaciondis, denominaciongen, numtramite, sanitario, observaciones, 'NOW()'], (err, results) => {
+    db.query(sql, [ nombre_comercial, denominacion_generica, numero_ingreso, registro_sanitario, observaciones, 'NOW()'], (err, results) => {
   if (err) {
     res.status(401).json({ error: 'Error al envió de los datos' });
   } else {
@@ -310,22 +310,17 @@ db.query(sql, [email], (err, results) => {
 
 
 
-/*app.get('*', (req, res) => {
-
-    const sql = 'SELECT DISTINCT nombre_empresa FROM 00_usuarios_detalle ORDER BY nombre_empresa ASC';
-  db.query(sql, (err, results) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.json(results);
-    }
-  });*/
-
-
-  
-
-  //res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+ //res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 //});
+
+
+const buildPath = path.join(__dirname, "build");
+app.use(express.static(buildPath));
+
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(buildPath, "Login.js"));
+});
 
 
 app.listen(port, () => {
