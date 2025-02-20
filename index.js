@@ -301,25 +301,12 @@ db.query(sql, [email], (err, results) => {
 });
 });
 
-//app.use(express.static(path.join(__dirname, '../client/build')));
 
-// Servir React para cualquier otra ruta
-/*app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});*/
-
-
-
- //res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-//});
-
-
-const buildPath = path.join(__dirname, "build");
-app.use(express.static(buildPath));
+app.use(express.static(path.join(__dirname, "build")));
 
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(buildPath, "Login.js"));
+  res.sendFile(path.join(__dirname, "build", "login.js"));
 });
 
 
